@@ -88,6 +88,9 @@ ENV PIP_NO_INPUT=1
 COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
 RUN chmod +x /usr/local/bin/comfy-manager-set-mode
 
+# Prevent Windows CRLF line endings from crashing the Linux boot sequence
+RUN sed -i 's/\r$//' /start.sh /handler.py /usr/local/bin/comfy-node-install /usr/local/bin/comfy-manager-set-mode || true
+
 # --- INSTALL ICO-V3 CUSTOM NODES ---
 RUN cd /comfyui/custom_nodes && \
     git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git && \
