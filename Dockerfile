@@ -89,6 +89,17 @@ ENV PIP_NO_INPUT=1
 COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
 RUN chmod +x /usr/local/bin/comfy-manager-set-mode
 
+# --- INSTALL ICO-V3 CUSTOM NODES ---
+RUN cd /comfyui/custom_nodes && \
+    git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git && \
+    git clone https://github.com/pythongosssss/ComfyUI-WD14-Tagger.git && \
+    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
+    git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git && \
+    cd ComfyUI-WD14-Tagger && (uv pip install -r requirements.txt || true) && cd .. && \
+    cd comfyui_controlnet_aux && (uv pip install -r requirements.txt || true) && cd .. && \
+    cd ComfyUI_IPAdapter_plus && (uv pip install -r requirements.txt || true) && cd .. && \
+    cd /comfyui
+
 # Set the default command to run when starting the container
 CMD ["/start.sh"]
 
